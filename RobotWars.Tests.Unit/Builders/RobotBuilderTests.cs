@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
 using FluentValidation;
+using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
 using RobotWars.Models;
 using RobotWars.Services;
+using System;
 using System.Collections.Generic;
 
 namespace RobotWars.Tests.Unit
@@ -23,7 +25,7 @@ namespace RobotWars.Tests.Unit
         public void Build_WithValidInputString_ReturnsArena()
         {
             // Arrange
-            _mockValidator.Setup(x => x.Validate(It.IsAny<Robot>())).Returns(new FluentValidation.Results.ValidationResult());
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Robot>())).Returns(new ValidationResult());
 
             // Act
             var input = new string[]
@@ -49,6 +51,64 @@ namespace RobotWars.Tests.Unit
                 Command.M,
                 Command.M
             });
+        }
+
+        [Test]
+        public void Build_WithInvalidHeaderString_ThrowsArgumentException()
+        {
+            // Arrange
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Robot>())).Returns(new ValidationResult());
+
+            // Act
+            var input = new string[]
+            {
+                "1 2 Z",
+                "LMLMLMLMM"
+            };
+
+            var action = () => _robotBuilder.Build(input);
+
+            // Assert
+            action.Should().Throw<ArgumentException>().WithMessage("Unable to parse heading");
+        }
+
+        [Test]
+        public void Build_WithInvalidCommandsString_ThrowsArgumentException()
+        {
+            // Arrange
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Robot>())).Returns(new ValidationResult());
+
+            // Act
+            var input = new string[]
+            {
+                "1 2 N",
+                "LMLMZLMM"
+            };
+
+            var action = () => _robotBuilder.Build(input);
+
+            // Assert
+            action.Should().Throw<ArgumentException>().WithMessage("Unable to parse command");
+        }
+
+        [Test]
+        public void Build_WithValidationErrors_ThrowsArgumentException()
+        {
+            // Arrange
+            var validationResult = new ValidationResult(new List<ValidationFailure> { new ValidationFailure("test", "test")});
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Robot>())).Returns(validationResult);
+
+            // Act
+            var input = new string[]
+            {
+                "1 2 N",
+                "LMLMLMLMM"
+            };
+
+            var action = () => _robotBuilder.Build(input);
+
+            // Assert
+            action.Should().Throw<ArgumentException>().WithMessage("test");
         }
     }
 }

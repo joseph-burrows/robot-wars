@@ -1,9 +1,12 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
+using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
 using RobotWars.Models;
 using RobotWars.Services;
 using RobotWars.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace RobotWars.Tests.Unit
@@ -38,7 +41,7 @@ namespace RobotWars.Tests.Unit
                 "M"
             };
 
-            _mockValidator.Setup(x => x.Validate(It.IsAny<Game>())).Returns(new FluentValidation.Results.ValidationResult());
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Game>())).Returns(new ValidationResult());
 
             _mockArenaBuilder.Setup(x => x.Build("5 5")).Returns(new Arena { Height = 5, Width = 5 });
 
@@ -65,5 +68,75 @@ namespace RobotWars.Tests.Unit
             _mockRobotBuilder.Verify(x => x.Build(new string[] { "3 3 E", "M" }), Times.Once);
         }
 
+        [Test]
+        public void Build_WithValidationErrors_ThrowsArgumentException()
+        {
+            // Arrange
+            var input = new List<string>
+            {
+                "5 5",
+                "1 2 N",
+                "M",
+                "3 3 E",
+                "M"
+            };
+
+            var validationResult = new ValidationResult(new List<ValidationFailure> { new ValidationFailure("test", "test") });
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Game>())).Returns(validationResult);
+
+            // Act
+            var action = () => _gameBuilder.Build(input);
+
+            // Assert
+            action.Should().Throw<ArgumentException>().WithMessage("test");
+        }
+
+        [Test]
+        public void Build_WithTooShortInput_ThrowsArgumentException()
+        {
+            // Arrange
+            var input = new List<string>
+            {
+                "5 5",
+            };
+
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Game>())).Returns(new ValidationResult());
+
+            // Act
+            var action = () => _gameBuilder.Build(input);
+
+            // Assert
+            action.Should().Throw<ArgumentException>().WithMessage("Not enough input arguments supplied");
+        }
+
+        [Test]
+        public void Build_WithEvenInput_ThrowsArgumentException()
+        {
+            // Arrange
+            var input = new List<string>
+            {
+                "5 5",
+                "1 2 N",
+                "M",
+                "3 3 E"
+            };
+
+            _mockValidator.Setup(x => x.Validate(It.IsAny<Game>())).Returns(new ValidationResult());
+
+            // Act
+            var action = () => _gameBuilder.Build(input);
+
+            // Assert
+            action.Should().Throw<ArgumentException>().WithMessage("Not enough input arguments supplied");
+        }
+
+
+        [TearDown]
+        public void TearDown()
+        {
+            _mockArenaBuilder.Invocations.Clear();
+            _mockRobotBuilder.Invocations.Clear();
+            _mockValidator.Invocations.Clear();
+        } 
     }
 }

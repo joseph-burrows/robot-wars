@@ -11,7 +11,7 @@ namespace RobotWars.Validators
             RuleFor(x => x.Arena).NotNull();
             RuleFor(x => x.Robots).NotNull();
 
-            RuleFor(x => x).Must(BeInBounds);
+            RuleFor(x => x).Must(BeInBounds).When(x => x.Arena != null && x.Robots != null).WithMessage("All robots must be in bounds");
         }
 
         private bool BeInBounds(Game game)

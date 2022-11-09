@@ -28,30 +28,44 @@ namespace RobotWars.Tests.Unit
             validationResult.IsValid.Should().BeTrue();
         }
 
-        /*
         [Test]
-        public void Validate_WithInvalidXPosition_ReturnsInvalidResult()
+        public void Validate_WithNullCommands_ReturnsInvalidResultWithErrors()
         {
+            // Arrange
+            var robot = new Robot
+            {
+                Commands = null,
+                Heading = Heading.N,
+                Position = new Coordinate { X = 1, Y = 1 }
+            };
+            var validator = new RobotValidator();
 
+            // Act
+            var validationResult = validator.Validate(robot);
+
+            // Assert
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors[0].ErrorMessage.Should().Be("'Commands' must not be empty.");
         }
 
         [Test]
-        public void Validate_WithInvalidYPosition_ReturnsInvalidResult()
+        public void Validate_WithNullPosition_ReturnsInvalidResultWithErrors()
         {
+            // Arrange
+            var robot = new Robot
+            {
+                Commands = new List<Command> { Command.L, Command.R, Command.M },
+                Heading = Heading.N,
+                Position = null
+            };
+            var validator = new RobotValidator();
 
+            // Act
+            var validationResult = validator.Validate(robot);
+
+            // Assert
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors[0].ErrorMessage.Should().Be("'Position' must not be empty.");
         }
-
-        [Test]
-        public void Validate_WithInvalidCommandsList_ReturnsInvalidResult()
-        {
-
-        }
-
-        [Test]
-        public void Validate_WithInvalidHeader_ReturnsInvalidResult()
-        {
-
-        }*/
-
     }
 }

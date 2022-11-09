@@ -9,14 +9,7 @@ namespace RobotWars.Validators
         {
             RuleFor(x => x.Heading).NotNull();
             RuleFor(x => x.Commands).NotNull();
-            RuleFor(x => x.Commands).Must(BeAValidCommandList);
             RuleFor(x => x.Position).NotNull();
-        }
-        private bool BeAValidCommandList(IEnumerable<Command> commands)
-        {
-            if (commands.Count(x => x == null) >= 1) return false;
-
-            return true;
         }
     }
 }

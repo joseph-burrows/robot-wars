@@ -4,11 +4,13 @@ using RobotWars.Services;
 using RobotWars.Services.Interfaces;
 using RobotWars.Validators;
 using StructureMap;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RobotWars
 {
     public class Bootstrapper
     {
+        [ExcludeFromCodeCoverage]
         public static Container GetIocContainer()
         {
             var container = new Container();
@@ -32,7 +34,6 @@ namespace RobotWars
             });
 
             return container;
-
         }
 
     }

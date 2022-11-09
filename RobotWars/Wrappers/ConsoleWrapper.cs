@@ -1,5 +1,8 @@
-﻿namespace RobotWars.Services
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RobotWars.Services
 {
+    [ExcludeFromCodeCoverage]
     public class ConsoleWrapper : IConsole
     {
         public string ReadLine()
