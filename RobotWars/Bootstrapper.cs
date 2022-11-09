@@ -1,11 +1,9 @@
-﻿using RobotWars.Services;
+﻿using FluentValidation;
+using RobotWars.Models;
+using RobotWars.Services;
 using RobotWars.Services.Interfaces;
+using RobotWars.Validators;
 using StructureMap;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RobotWars
 {
@@ -28,6 +26,9 @@ namespace RobotWars
             {
                 config.For<IInputParser>().Use<ConsoleInputParser>();
                 config.For<IConsole>().Use<ConsoleWrapper>();
+                config.For<IValidator<Arena>>().Use<ArenaValidator>();
+                config.For<IValidator<Robot>>().Use<RobotValidator>();
+                config.For<IValidator<Game>>().Use<GameValidator>();
             });
 
             return container;

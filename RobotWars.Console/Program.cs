@@ -1,6 +1,4 @@
-﻿using RobotWars.Services;
-using RobotWars.Services.Interfaces;
-using System;
+﻿using RobotWars.Services.Interfaces;
 
 namespace RobotWars
 {

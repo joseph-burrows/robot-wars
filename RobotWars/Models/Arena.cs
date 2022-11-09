@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace RobotWars
+﻿namespace RobotWars
 {
     public class Arena
     {
