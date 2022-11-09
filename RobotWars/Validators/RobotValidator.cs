@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using RobotWars.Models;
 
 namespace RobotWars.Validators
 {

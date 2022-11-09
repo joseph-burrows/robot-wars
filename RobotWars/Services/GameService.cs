@@ -22,7 +22,7 @@ namespace RobotWars.Services
             _gameEvaluator = gameEvaluator;
         }
 
-        public void Play() 
+        public void Play()
         {
             var input = _inputParser.Parse();
             var game = _gameBuilder.Build(input);

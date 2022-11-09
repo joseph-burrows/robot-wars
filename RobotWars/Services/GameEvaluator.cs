@@ -30,18 +30,18 @@ namespace RobotWars.Services
             occupiedPositions.Remove(robot.Position.ToString());
             var moves = new Queue<Command>(robot.Commands);
 
-            while(moves.Count > 0)
+            while (moves.Count > 0)
             {
                 var move = moves.Dequeue();
 
                 switch (move)
                 {
                     case Command.L:
-                        robot.Heading = RotateHeading(robot.Heading, (int) Command.L);
+                        robot.Heading = RotateHeading(robot.Heading, (int)Command.L);
                         break;
 
                     case Command.R:
-                        robot.Heading = RotateHeading(robot.Heading, (int) Command.R);
+                        robot.Heading = RotateHeading(robot.Heading, (int)Command.R);
                         break;
 
                     case Command.M:
@@ -82,8 +82,8 @@ namespace RobotWars.Services
         {
             Heading newHeading = start + rotation;
 
-            if ((int) newHeading > 3) newHeading = (Heading) 0;
-            if ((int) newHeading < 0) newHeading = (Heading) 3;
+            if ((int)newHeading > 3) newHeading = (Heading)0;
+            if ((int)newHeading < 0) newHeading = (Heading)3;
 
             return newHeading;
         }

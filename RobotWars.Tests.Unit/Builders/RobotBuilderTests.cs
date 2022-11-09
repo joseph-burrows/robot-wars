@@ -95,7 +95,7 @@ namespace RobotWars.Tests.Unit
         public void Build_WithValidationErrors_ThrowsArgumentException()
         {
             // Arrange
-            var validationResult = new ValidationResult(new List<ValidationFailure> { new ValidationFailure("test", "test")});
+            var validationResult = new ValidationResult(new List<ValidationFailure> { new ValidationFailure("test", "test") });
             _mockValidator.Setup(x => x.Validate(It.IsAny<Robot>())).Returns(validationResult);
 
             // Act

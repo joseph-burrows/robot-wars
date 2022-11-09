@@ -44,7 +44,7 @@ namespace RobotWars.Services
         {
             var robots = new List<Robot>();
 
-            for (int i = 1; i < input.Count - 1; i+= 2)
+            for (int i = 1; i < input.Count - 1; i += 2)
             {
                 var robot = _robotBuilder.Build(new string[] { input[i], input[i + 1] });
                 robots.Add(robot);

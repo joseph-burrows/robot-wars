@@ -137,6 +137,6 @@ namespace RobotWars.Tests.Unit
             _mockArenaBuilder.Invocations.Clear();
             _mockRobotBuilder.Invocations.Clear();
             _mockValidator.Invocations.Clear();
-        } 
+        }
     }
 }

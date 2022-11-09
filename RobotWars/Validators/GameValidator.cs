@@ -20,7 +20,7 @@ namespace RobotWars.Validators
             var width = game.Arena.Width;
             var height = game.Arena.Height;
 
-            foreach(var robot in robots)
+            foreach (var robot in robots)
             {
                 if (robot.Position.X < 0 || robot.Position.X > width) return false;
                 if (robot.Position.Y < 0 || robot.Position.Y > height) return false;

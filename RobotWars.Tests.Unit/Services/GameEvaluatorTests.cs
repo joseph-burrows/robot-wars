@@ -143,7 +143,7 @@ namespace RobotWars.Tests.Unit.Services
             var robot2 = GetRobotWithPosition(4, 3, Heading.W);
             robot2.Commands = new List<Command> { Command.M, Command.M, Command.M, Command.M, Command.M };
 
-            var game = new Game { Arena = arena, Robots = new List<Robot> { robot1 , robot2} };
+            var game = new Game { Arena = arena, Robots = new List<Robot> { robot1, robot2 } };
 
             // Act
             _gameEvaluator.Evaluate(game);
