@@ -37,11 +37,11 @@ namespace RobotWars.Services
                 switch (move)
                 {
                     case Command.L:
-                        robot.Heading = RotateHeading(robot.Heading, -1);
+                        robot.Heading = RotateHeading(robot.Heading, (int) Command.L);
                         break;
 
                     case Command.R:
-                        robot.Heading = RotateHeading(robot.Heading, 1);
+                        robot.Heading = RotateHeading(robot.Heading, (int) Command.R);
                         break;
 
                     case Command.M:

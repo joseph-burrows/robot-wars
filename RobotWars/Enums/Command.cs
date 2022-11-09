@@ -2,8 +2,8 @@
 {
     public enum Command
     {
-        L,
-        R,
-        M
+        L = -1,
+        R = 1,
+        M = 0
     }
 }

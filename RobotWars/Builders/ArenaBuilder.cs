@@ -15,8 +15,8 @@ namespace RobotWars.Services
         public Arena Build(string input)
         {
             var split = input.Split(' ');
-            var height = Int32.Parse(split[0]);
-            var width = Int32.Parse(split[1]);
+            var height = int.Parse(split[0]);
+            var width = int.Parse(split[1]);
             var arena = new Arena { Height = height, Width = width };
 
             Validate(arena);

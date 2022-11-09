@@ -30,13 +30,14 @@ namespace RobotWars.Services
 
         private Coordinate GetPosition(string[] positionInformation)
         {
-            return new Coordinate { X = Int32.Parse(positionInformation[0]), Y = Int32.Parse(positionInformation[1]) };
+            return new Coordinate { X = int.Parse(positionInformation[0]), Y = int.Parse(positionInformation[1]) };
         }
 
         private Heading GetHeading(string[] positionInformation)
         {
             var success = Enum.TryParse(positionInformation[2], out Heading heading);
             if (!success) throw new ArgumentException("Unable to parse heading");
+
             return heading;
         }
 
@@ -48,6 +49,7 @@ namespace RobotWars.Services
             {
                 var success = Enum.TryParse(command.ToString(), out Command c);
                 if (!success) throw new ArgumentException("Unable to parse command");
+
                 commands.Add(c);
             }
             return commands;
