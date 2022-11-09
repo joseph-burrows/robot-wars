@@ -1,2 +1,2 @@
-# robot-wars-opentable
-Technical test for OpenTable
+# robot-wars
+Technical test
