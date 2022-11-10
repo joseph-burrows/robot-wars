@@ -3,31 +3,29 @@ using NUnit.Framework;
 using RobotWars.Models;
 using RobotWars.Services;
 using RobotWars.Services.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RobotWars.Tests.Unit.Services
 {
-    public class GameServiceTests
+    public class GameOutputTests
     {
-        private IGameService _gameService;
 
-        private Mock<IGameBuilder> _mockGameBuilder = new Mock<IGameBuilder>();
-        private Mock<IInputParser> _mockInputParser = new Mock<IInputParser>();
-        private Mock<IGameEvaluator> _mockGameEvaluator = new Mock<IGameEvaluator>();
-        private Mock<IGameOutput> _mockGameOutput = new Mock<IGameOutput>();
+        private IGameOutput _gameOutput;
+
+        private readonly Mock<IConsole> _mockConsole = new Mock<IConsole>();
 
         [SetUp]
         public void SetUp()
         {
-            _gameService = new GameService(
-                _mockGameBuilder.Object,
-                _mockInputParser.Object,
-                _mockGameEvaluator.Object,
-                _mockGameOutput.Object);
+            _gameOutput = new GameOutput(_mockConsole.Object);
         }
 
         [Test]
-        public void Play_WithValidInput_ShouldCallOutput()
+        public void Output_WithValidGame_ShouldOutputResultsToConsole()
         {
             // Arrange
             var game = new Game
@@ -62,13 +60,15 @@ namespace RobotWars.Tests.Unit.Services
                     }
             };
 
-            _mockGameBuilder.Setup(x => x.Build(It.IsAny<List<string>>())).Returns(game);
-
             // Act
-            _gameService.Play();
+            _gameOutput.Output(game);
 
             // Assert
-            _mockGameOutput.Verify(x => x.Output(It.Is<Game>(y => y == game)));
+            _mockConsole.Verify(x => x.WriteLine(It.Is<string>(y => y == "2 2 N")), Times.Once);
+            _mockConsole.Verify(x => x.WriteLine(It.Is<string>(y => y == "3 3 E")), Times.Once);
+            _mockConsole.Verify(x => x.WriteLine(It.Is<string>(y => y == "4 4 S")), Times.Once);
+            _mockConsole.Verify(x => x.WriteLine(It.Is<string>(y => y == "5 5 W")), Times.Once);
         }
+
     }
 }
