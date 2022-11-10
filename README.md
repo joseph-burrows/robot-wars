@@ -13,6 +13,7 @@ Nuget packages used (that weren't already present in the default console project
  - Integration tests, whilst we have a pretty good coverage with unit tests it would be good to get some end to end tests in to validate that it works from console -> user
  - Performance tests, how does the current solution handle 100 robots? 1000 robots? 10000? How scalable is it?
  - Tidying up unit tests, whilst generally we tend to put DRY on a backseat when writing tests there are definitely places where code reuse could have been reduced (i.e. verbose object creation) with specific test helper methods. Whether this is more readable or not is debatable!
+ - Containerization
 
 Possible extensions (things that might be interesting to explore but weren't a part of the brief):
 - How could we adapt the current solution to a non grid-based system (i.e. float coordinates and directions)
